@@ -16,6 +16,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
   <link rel="stylesheet" href="{{ asset('backend/dist/css/adminlte.min.css') }}">
   <link rel="stylesheet" type="text/css" href="{{ asset('backend/plugins/toastr/toastr.min.css') }}"/>
+  <link rel="stylesheet" type="text/css" href="{{ asset('backend/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}"/>
+  <link rel="stylesheet" type="text/css" href="{{ asset('backend/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}"/>
   <livewire:styles/>
 </head>
 <body class="hold-transition sidebar-mini">
@@ -57,6 +59,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- AdminLTE App -->
 <script src="{{ asset('backend/dist/js/adminlte.min.js') }}"></script>
 <script src="{{ asset('backend/plugins/toastr/toastr.min.js') }}"></script>
+<script src="{{ asset('backend/plugins/moment/moment.min.js') }}"></script>
+<script src="{{ asset('backend/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/27.1.0/classic/ckeditor.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 <script>
     $(document).ready(function(){
@@ -67,6 +73,30 @@ scratch. This page gets rid of all links and provides the needed markup only.
     });
 </script>
 <script>
+    window.addEventListener('show-delete-confirmation', event => {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              Livewire.emit('deleteConfirmed');
+            }
+          })
+    });
+
+    window.addEventListener('show-delete-message', event => {
+        Swal.fire(
+        'System Info!',
+        event.detail.message,
+        'success'
+        )
+    });
+
     window.addEventListener('show-form', event => {
         $('#form').modal('show');
     });
@@ -85,9 +115,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
         toastr.success(event.detail.message, 'Success!');
     });
 
+    window.addEventListener('alert', event => {
+        toastr.success(event.detail.message, 'Success!');
+    });
+
 
 </script>
-
+@stack('js')
 <livewire:scripts/>
 </body>
 </html>

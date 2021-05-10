@@ -2,11 +2,11 @@
 
 namespace App\Http\Livewire\Admin\Users;
 
+use App\Http\Livewire\Admin\AdminComponent;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
-use Livewire\Component;
 
-class ListUsers extends Component
+class ListUsers extends AdminComponent
 {
 
     public $form = [];
